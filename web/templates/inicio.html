@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% import "macros.html" as m %}
+{% block titulo %}Inicio{% endblock %}
+{% block contenido %}
+
+<div class="page-head">
+<h1>Las noches en el Abismo</h1>
+</div>
+
+{% if d.total == 0 %}
+<section class="section">
+<p class="section__hint">Todavía no hay partidas guardadas. Abre el cliente de League y ejecuta <code>lol-collector collect</code>.</p>
+</section>
+{% else %}
+
+<div class="inicio-grid">
+
+<section class="noches" aria-labelledby="historial">
+<div class="section__head">
+<h2 id="historial">Historial</h2>
+</div>
+
+{% for n in d.noches %}
+<section class="noche" aria-labelledby="noche-{{ loop.index }}">
+<header class="noche__head">
+<h3 id="noche-{{ loop.index }}" class="noche__titulo">{{ n.titulo }}</h3>
+<span class="noche__meta">{{ n.partidas }} {% if n.partidas == 1 %}partida{% else %}partidas{% endif %} · <span class="team-label team-label--blue">Azul {{ n.azul }}</span> – <span class="team-label team-label--red">Rojo {{ n.rojo }}</span></span>
+</header>
+<ol class="partidas">
+{% for f in n.filas %}
+<li>
+<a class="partida-fila" href="/partida/{{ f.id }}" aria-label="{{ f.aria }}">
+<span class="partida-fila__hora"><time datetime="{{ f.iso }}">{{ f.hora }}</time></span>
+<span class="partida-fila__res">{% if f.gana_azul %}<span class="team-label team-label--blue">Ganó azul</span>{% else if f.gana_rojo %}<span class="team-label team-label--red">Ganó rojo</span>{% else %}<span class="section__hint">Sin resultado</span>{% endif %}</span>
+<span class="partida-fila__marcador"><span class="azul">{{ f.kills_azul }}</span>–<span class="rojo">{{ f.kills_rojo }}</span></span>
+<span class="partida-fila__dur"><span class="sr-only">Duración </span>{{ f.duracion }}</span>
+<span class="partida-fila__equipos">
+<span class="mini-roster mini-roster--blue">{% for i in f.azul %}{% call m::champ(i, "icon--xs") %}{% endfor %}</span>
+<span class="vs">vs</span>
+<span class="mini-roster mini-roster--red">{% for i in f.rojo %}{% call m::champ(i, "icon--xs") %}{% endfor %}</span>
+</span>
+<span class="partida-fila__mvp">{% if let Some(v) = f.mvp %}<span class="badge badge--mvp">MVP</span><span class="partida-fila__mvp-nombre">{{ v.nombre }}</span>{% endif %}</span>
+</a>
+</li>
+{% endfor %}
+</ol>
+</section>
+{% endfor %}
+
+{% if d.paginas > 1 %}
+<nav class="paginacion" aria-label="Paginación del historial">
+{% if let Some(a) = d.anterior %}<a class="paginacion__enlace" href="/?pagina={{ a }}" rel="prev"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"></path></svg><span>Anterior</span></a>{% else %}<span class="paginacion__enlace paginacion__enlace--off" aria-disabled="true"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"></path></svg><span>Anterior</span></span>{% endif %}
+<ol class="paginacion__numeros">
+{% for p in d.numeros %}{% if p.hueco %}<li class="paginacion__hueco" aria-hidden="true">…</li>{% else if p.actual %}<li><span class="paginacion__num paginacion__num--actual" aria-current="page"><span class="sr-only">Página </span>{{ p.n }}</span></li>{% else %}<li><a class="paginacion__num" href="/?pagina={{ p.n }}"><span class="sr-only">Página </span>{{ p.n }}</a></li>{% endif %}{% endfor %}
+</ol>
+{% if let Some(s) = d.siguiente %}<a class="paginacion__enlace" href="/?pagina={{ s }}" rel="next"><span>Siguiente</span><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>{% else %}<span class="paginacion__enlace paginacion__enlace--off" aria-disabled="true"><span>Siguiente</span><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span>{% endif %}
+</nav>
+{% endif %}
+</section>
+
+<aside class="lateral" aria-label="Resumen del grupo">
+<section class="panel" aria-labelledby="top-t">
+<h2 id="top-t" class="panel__title">Top del grupo</h2>
+<ol class="top-lista">
+{% for t in d.top %}
+<li><a class="top-fila" href="/jugador/{{ t.id }}" title="{{ t.partidas }} {% if t.partidas == 1 %}partida{% else %}partidas{% endif %}"><span class="top-fila__pos{% if t.pos == 1 %} top-fila__pos--oro{% endif %}">{{ t.pos }}</span>{% call m::avatar(t.avatar, t.hue, t.iniciales, t.nombre, "icon--xs", "") %}<span class="top-fila__nombre">{{ t.nombre }}</span><span class="top-fila__wr">{{ t.puntos }} <small>pts</small></span></a></li>
+{% endfor %}
+</ol>
+<a class="top-mas" href="/estadisticas">Ver ranking completo{% call m::flecha() %}</a>
+</section>
+
+{% if let Some(v) = d.mvp_noche %}
+<section class="panel" aria-labelledby="mvpn-t">
+<h2 id="mvpn-t" class="panel__title">MVP de la noche</h2>
+<div class="mvp-noche">
+{% call m::avatar(v.avatar, v.hue, v.iniciales, v.nombre, "icon--md", "") %}
+<div class="mvp-noche__texto">
+<a class="player-name" href="/jugador/{{ v.id }}">{{ v.nombre }}<span class="tag">#{{ v.etiqueta }}</span></a>
+<span class="section__hint">{{ v.veces }} {% if v.veces == 1 %}MVP{% else %}MVPs{% endif %} · {{ v.noche }}</span>
+</div>
+</div>
+</section>
+{% endif %}
+</aside>
+
+</div>
+
+{% endif %}
+{% endblock %}

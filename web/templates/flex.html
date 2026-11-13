@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+{% import "macros.html" as m %}
+{% block titulo %}Flex{% endblock %}
+{% block contenido %}
+
+<div class="page-head">
+<span class="eyebrow">{{ f.partidas }} partidas · {{ f.jugadores }} jugadores</span>
+<h1>Flex del grupo</h1>
+</div>
+
+{% if f.filas.is_empty() %}
+<section class="section">
+<p class="section__hint">Todavía no hay partidas flex guardadas.</p>
+</section>
+{% else %}
+
+<div class="flex-split">
+<section class="section" aria-labelledby="clasificacion">
+<div class="section__head"><h2 id="clasificacion">Clasificación</h2></div>
+<div class="table-wrap">
+<table class="data-table" data-sortable="">
+<caption class="sr-only">Jugadores en flex. Ordenado por rango, de mayor a menor.</caption>
+<thead>
+<tr>
+<th scope="col"><span class="sr-only">Puesto</span></th>
+<th scope="col" class="ta-left">Jugador</th>
+<th scope="col" aria-sort="descending">{% call m::ordenar("Rango") %}</th>
+<th scope="col">{% call m::ordenar("Partidas") %}</th>
+<th scope="col">{% call m::ordenar("Winrate") %}</th>
+<th scope="col">{% call m::ordenar("KDA") %}</th>
+<th scope="col">{% call m::ordenar("Daño medio") %}</th>
+<th scope="col">{% call m::ordenar("Racha") %}</th>
+<th scope="col" class="ta-left">Más jugados</th>
+</tr>
+</thead>
+<tbody>
+{% for r in f.filas %}<tr><td><span class="rank">{{ r.pos }}</span></td><td class="ta-left"><span class="who-cell">{% call m::avatar(r.jug.avatar, r.jug.hue, r.jug.iniciales, r.jug.nombre, "icon--sm", "") %}<a class="player-name" href="/flex/{{ r.jug.id }}">{{ r.jug.nombre }}<span class="tag">#{{ r.etiqueta }}</span></a></span></td><td data-value="{{ r.rango_val }}">{% if let Some(t) = r.rango %}<span class="rango-celda">{{ t }}</span>{% else %}<span class="muted">Sin clasificar</span>{% endif %}</td><td data-value="{{ r.partidas }}">{{ r.partidas }}</td><td data-value="{{ r.wr_val }}">{% if r.partidas > 0 %}<span class="wr-cell"><span class="wr-vd">{{ r.victorias }} V – {{ r.derrotas }} D</span>{{ r.wr_texto }} %<span class="meter meter--win" style="--pct:{{ r.wr_val }}" aria-hidden="true"><span></span></span></span>{% else %}<span class="muted">–</span>{% endif %}</td><td data-value="{{ r.kda_val }}">{% if r.partidas > 0 %}<span class="kda-ratio {{ r.kda_clase }}">{{ r.kda_texto }}</span>{% else %}<span class="muted">–</span>{% endif %}</td><td data-value="{{ r.dano_val }}">{% if r.partidas > 0 %}{{ r.dano_texto }}{% else %}<span class="muted">–</span>{% endif %}</td><td data-value="{{ r.racha_val }}">{% if !r.racha_texto.is_empty() %}<span class="racha {% if r.racha_gana %}racha--win{% else %}racha--loss{% endif %}">{{ r.racha_texto }}</span>{% else %}<span class="muted">–</span>{% endif %}</td><td class="ta-left"><span class="mini-roster">{% for i in r.mejores %}{% call m::champ(i, "icon--xs") %}{% endfor %}</span></td></tr>
+{% endfor %}</tbody>
+</table>
+</div>
+</section>
+
+<aside class="flex-lado" aria-label="Gráficos del grupo">
+<article class="gf-card gf-card--resumen">
+<div class="wr-ring" style="--pct:{{ f.wr_css }}" role="img" aria-label="Winrate del grupo {{ f.wr_texto }} por ciento">
+<div class="wr-ring__inner" aria-hidden="true"><div class="wr-ring__value">{{ f.wr_texto }}<span style="font-size: 18px">%</span></div><div class="wr-ring__label">Winrate</div></div>
+</div>
+<div class="gf-card__datos">
+<span class="gf-card__titulo">Resultados del grupo</span>
+<span class="gf-card__cifra">{{ f.victorias }} V – {{ f.derrotas }} D</span>
+<span class="muted">{{ f.partidas }} partidas · última {{ f.ultima }}</span>
+</div>
+</article>
+{% if let Some(g) = f.rangos %}
+<article class="gf-card">
+<h2 class="gf-card__titulo">Evolución del rango</h2>
+{{ g.svg|safe }}
+<ul class="gf-leyenda">{% for l in g.leyenda %}<li><span class="gf-muestra" style="background: hsl({{ l.hue }} 72% 58%)"></span>{{ l.nombre }}</li>{% endfor %}</ul>
+</article>
+{% endif %}
+{% if let Some(svg) = f.semanas %}
+<article class="gf-card">
+<h2 class="gf-card__titulo">Partidas por semana</h2>
+{{ svg|safe }}
+<ul class="gf-leyenda"><li><span class="gf-muestra gf-muestra--v"></span>Victorias</li><li><span class="gf-muestra gf-muestra--d"></span>Derrotas</li></ul>
+</article>
+{% endif %}
+{% if let Some(svg) = f.calor %}
+<article class="gf-card">
+<h2 class="gf-card__titulo">Cuándo juegan</h2>
+{{ svg|safe }}
+</article>
+{% endif %}
+</aside>
+</div>
+
+{% if !f.duos.is_empty() %}
+<section class="section" aria-labelledby="duos">
+<div class="section__head"><h2 id="duos">Mejores dúos</h2></div>
+<div class="table-wrap">
+<table class="data-table">
+<caption class="sr-only">Parejas del grupo que jugaron juntas en el mismo equipo, ordenadas por winrate.</caption>
+<thead><tr><th scope="col" class="ta-left">Dúo</th><th scope="col">Partidas</th><th scope="col">Winrate</th></tr></thead>
+<tbody>
+{% for d in f.duos %}<tr><td class="ta-left"><span class="duo-celda">{% call m::jug_flex(d.a) %}<span class="muted" aria-hidden="true">+</span>{% call m::jug_flex(d.b) %}</span></td><td>{{ d.partidas }}</td><td><span class="wr-cell"><span class="wr-vd">{{ d.victorias }} V – {{ d.derrotas }} D</span>{{ d.wr_texto }} %<span class="meter meter--win" style="--pct:{{ d.wr_val }}" aria-hidden="true"><span></span></span></span></td></tr>
+{% endfor %}</tbody>
+</table>
+</div>
+</section>
+{% endif %}
+
+{% if !f.recientes.is_empty() %}
+<section class="section" aria-labelledby="recientes">
+<div class="section__head"><h2 id="recientes">Últimas partidas</h2></div>
+<ul class="flex-lista">
+{% for p in f.recientes %}
+<li class="flex-partida {% if p.gana %}is-win{% else %}is-loss{% endif %}">
+<div class="flex-partida__cab">{% call m::insignia(p.gana) %}<time class="muted" datetime="{{ p.iso }}">{{ p.fecha }}</time><span class="muted">{{ p.duracion }}</span></div>
+<div class="flex-partida__jug">
+{% for x in p.jugadores %}<span class="flex-partida__item">{% call m::champ(x.campeon, "icon--sm") %}<span class="flex-partida__quien"><a class="player-name" href="/flex/{{ x.jug.id }}">{{ x.jug.nombre }}</a><span class="kda num"><b>{{ x.k }}</b> / <b class="kda__d">{{ x.d }}</b> / <b>{{ x.a }}</b></span></span></span>{% endfor %}
+</div>
+</li>
+{% endfor %}
+</ul>
+</section>
+{% endif %}
+
+{% endif %}
+{% endblock %}

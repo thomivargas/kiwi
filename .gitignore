@@ -1,0 +1,10 @@
+# Secretos: nunca subir
+.env
+data/riot.key
+
+# Configuracion personal de agentes
+.claude/settings.local.json
+
+# Compilacion y datos locales
+target/
+data/

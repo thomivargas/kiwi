@@ -1,0 +1,169 @@
+{% extends "base.html" %}
+{% import "macros.html" as m %}
+{% block titulo %}{{ j.jug.nombre }} · Flex{% endblock %}
+{% block contenido %}
+
+<section class="profile-head" aria-labelledby="perfil">
+{% call m::avatar(j.jug.avatar, j.jug.hue, j.jug.iniciales, j.jug.nombre, "icon--xl", "; position: relative; z-index: 1") %}
+<div class="profile-head__id" style="position: relative; z-index: 1">
+<span class="eyebrow">Flex</span>
+<h1 id="perfil" class="profile-head__name">{{ j.jug.nombre }}<span class="tag">#{{ j.etiqueta }}</span></h1>
+<div class="page-head__meta">
+<span class="chip"><b class="num" style="color: var(--text)">{{ j.partidas }}</b> {% if j.partidas == 1 %}partida{% else %}partidas{% endif %}</span>
+<span class="chip" style="color: var(--win)"><svg class="i i--sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg><span class="num">{{ j.victorias }}</span> {% if j.victorias == 1 %}victoria{% else %}victorias{% endif %}</span>
+<span class="chip" style="color: var(--loss)"><svg class="i i--sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg><span class="num">{{ j.derrotas }}</span> {% if j.derrotas == 1 %}derrota{% else %}derrotas{% endif %}</span>
+</div>
+{% if let Some(n) = j.nivel %}<span class="profile-head__seen">Nivel de invocador <b class="num">{{ n }}</b></span>{% endif %}
+<a class="profile-head__seen" href="/jugador/{{ j.jug.id }}">Ver perfil de personalizadas</a>
+</div>
+{% if j.partidas > 0 %}
+<div class="wr-ring" style="--pct:{{ j.wr_css }}" role="img" aria-label="Winrate {{ j.wr_texto }} por ciento">
+<div class="wr-ring__inner" aria-hidden="true"><div class="wr-ring__value">{{ j.wr_texto }}<span style="font-size: 18px">%</span></div><div class="wr-ring__label">Winrate</div></div>
+</div>
+{% endif %}
+</section>
+
+<section class="tiles" aria-label="Medias" style="margin-top: 24px">
+{% if let Some(r) = j.rango %}
+<article class="stat-tile stat-tile--feature">
+<span class="stat-tile__label">Rango {{ r.cola }}</span>
+<span class="stat-tile__value" style="font-size: 1.6rem">{{ r.texto }}</span>
+<span class="stat-tile__sub">{% if r.detalle.is_empty() %}Esta temporada{% else %}{{ r.detalle }}{% endif %}</span>
+</article>
+{% endif %}
+{% if j.partidas > 0 %}
+<article class="stat-tile">
+<span class="stat-tile__label">KDA medio</span>
+<span class="stat-tile__value" style="color: var(--gold-strong)">{{ j.kda }}</span>
+<span class="stat-tile__sub num">{{ j.kda_detalle }}</span>
+</article>
+<article class="stat-tile">
+<span class="stat-tile__label">Daño medio a campeones</span>
+<span class="stat-tile__value">{{ j.dano_medio }}</span>
+</article>
+<article class="stat-tile">
+<span class="stat-tile__label">Farmeo</span>
+<span class="stat-tile__value">{{ j.cs_min }}<small>tropas/min</small></span>
+<span class="stat-tile__sub">Visión {{ j.vision_min }} por minuto</span>
+</article>
+<article class="stat-tile">
+<span class="stat-tile__label">Racha actual</span>
+<span class="stat-tile__value {% if j.racha_gana %}racha--win{% else %}racha--loss{% endif %}" style="font-size: 1.6rem">{{ j.racha_texto }}</span>
+<span class="stat-tile__sub">Mejor: {{ j.mejor_racha }} V · peor: {{ j.peor_racha }} D</span>
+</article>
+{% endif %}
+</section>
+
+{% if j.partidas > 0 %}
+<section class="section" aria-labelledby="forma">
+<div class="section__head"><h2 id="forma">Forma reciente</h2></div>
+{% call m::forma(j.forma) %}
+</section>
+{% endif %}
+
+{% if let Some(g) = j.rangos %}
+<section class="section" aria-labelledby="evolucion">
+<div class="section__head"><h2 id="evolucion">Evolución del rango</h2></div>
+<div class="gf-caja">{{ g.svg|safe }}</div>
+</section>
+{% endif %}
+
+<div class="gf-par">
+{% if let Some(g) = j.acumulado %}
+<section class="section" aria-labelledby="acumulado">
+<div class="section__head"><h2 id="acumulado">Winrate acumulado</h2></div>
+<div class="gf-caja">{{ g.svg|safe }}</div>
+</section>
+{% endif %}
+{% if let Some(svg) = j.semanas %}
+<section class="section" aria-labelledby="semanas">
+<div class="section__head"><h2 id="semanas">Partidas por semana</h2></div>
+<div class="gf-caja">
+{{ svg|safe }}
+<ul class="gf-leyenda"><li><span class="gf-muestra gf-muestra--v"></span>Victorias</li><li><span class="gf-muestra gf-muestra--d"></span>Derrotas</li></ul>
+</div>
+</section>
+{% endif %}
+</div>
+
+{% if let Some(svg) = j.calor %}
+<section class="section" aria-labelledby="calor">
+<div class="section__head"><h2 id="calor">Cuándo juega</h2></div>
+<div class="gf-caja">{{ svg|safe }}</div>
+</section>
+{% endif %}
+
+{% if !j.campeones.is_empty() %}
+<section class="section" aria-labelledby="campeones">
+<div class="section__head"><h2 id="campeones">Campeones</h2></div>
+<div class="table-wrap">
+<table class="data-table" data-sortable="">
+<caption class="sr-only">Rendimiento por campeón.</caption>
+<thead><tr><th scope="col" class="ta-left">Campeón</th><th scope="col" aria-sort="descending">{% call m::ordenar("Partidas") %}</th><th scope="col">{% call m::ordenar("Winrate") %}</th><th scope="col">{% call m::ordenar("KDA") %}</th></tr></thead>
+<tbody>
+{% for c in j.campeones %}<tr><td class="ta-left"><span class="who-cell">{% call m::champ(c.icono, "icon--sm") %}<span>{{ c.icono.nombre }}</span></span></td><td data-value="{{ c.partidas }}">{{ c.partidas }}</td><td data-value="{{ c.wr_val }}"><span class="wr-cell"><span class="wr-vd">{{ c.victorias }} V – {{ c.derrotas }} D</span>{{ c.wr_texto }} %<span class="meter meter--win" style="--pct:{{ c.wr_val }}" aria-hidden="true"><span></span></span></span></td><td data-value="{{ c.kda }}">{{ c.kda }}</td></tr>
+{% endfor %}</tbody>
+</table>
+</div>
+</section>
+{% endif %}
+
+{% if !j.roles.is_empty() %}
+<section class="section" aria-labelledby="roles">
+<div class="section__head"><h2 id="roles">Posiciones</h2></div>
+<div class="table-wrap">
+<table class="data-table">
+<caption class="sr-only">Rendimiento por posición.</caption>
+<thead><tr><th scope="col" class="ta-left">Posición</th><th scope="col">Partidas</th><th scope="col">Winrate</th><th scope="col">KDA</th></tr></thead>
+<tbody>
+{% for r in j.roles %}<tr><td class="ta-left">{{ r.nombre }}</td><td>{{ r.partidas }}</td><td><span class="wr-cell"><span class="wr-vd">{{ r.victorias }} V – {{ r.derrotas }} D</span>{{ r.wr_texto }} %<span class="meter meter--win" style="--pct:{{ r.wr_val }}" aria-hidden="true"><span></span></span></span></td><td>{{ r.kda }}</td></tr>
+{% endfor %}</tbody>
+</table>
+</div>
+</section>
+{% endif %}
+
+{% if !j.historial.is_empty() %}
+<section class="section" aria-labelledby="historial">
+<div class="section__head"><h2 id="historial">Historial de partidas</h2></div>
+<div class="table-wrap">
+<table class="data-table">
+<thead>
+<tr>
+<th scope="col">Resultado</th>
+<th scope="col" class="ta-left">Campeón</th>
+<th scope="col" class="ta-left">Posición</th>
+<th scope="col">K / D / A</th>
+<th scope="col">KDA</th>
+<th scope="col">Daño</th>
+<th scope="col">Tropas</th>
+<th scope="col">Fecha</th>
+<th scope="col">Duración</th>
+</tr>
+</thead>
+<tbody>
+{% for h in j.historial %}
+<tr class="history-row {% if h.gana %}is-win{% else %}is-loss{% endif %}">
+<td>{% call m::insignia(h.gana) %}</td>
+<td class="ta-left"><span class="who-cell">{% call m::champ(h.campeon, "icon--sm") %}</span></td>
+<td class="ta-left muted">{{ h.rol }}</td>
+<td><span class="kda"><b>{{ h.k }}</b> / <b class="kda__d">{{ h.d }}</b> / <b>{{ h.a }}</b></span></td>
+<td><span class="kda-ratio {{ h.kda_clase }}">{{ h.kda }}</span></td>
+<td>{{ h.dano }}</td>
+<td>{{ h.cs }}</td>
+<td class="muted"><time datetime="{{ h.iso }}">{{ h.fecha }}</time></td>
+<td class="muted">{{ h.duracion }}</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+</div>
+</section>
+{% endif %}
+
+{% if j.partidas == 0 %}
+<section class="section">
+<p class="section__hint">Todavía no hay partidas flex de este jugador.</p>
+</section>
+{% endif %}
+{% endblock %}

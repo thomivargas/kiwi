@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Sala Kiwi · Estadísticas del grupo</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800&amp;family=IBM+Plex+Mono:wght@500&amp;family=IBM+Plex+Sans:wght@400;500;600;700&amp;display=swap">
+<link rel="stylesheet" href="styles.css">
+<script src="app.js" defer></script>
+</head>
+<body>
+<div class="app" data-theme="dark">
+<a class="skip-link" href="#contenido">Saltar al contenido</a>
+<header class="site-header">
+<div class="container site-header__inner">
+<a class="brand" href="index.html" aria-label="Sala Kiwi, inicio">
+<svg class="brand__mark" viewBox="0 0 32 32" aria-hidden="true"><path d="M16 2 30 16 16 30 2 16Z" fill="none" stroke="currentColor" stroke-width="2"></path><path d="M16 9.5 22.5 16 16 22.5 9.5 16Z" fill="currentColor"></path></svg>
+<span style="display: flex; flex-direction: column; line-height: 1; gap: 4px">Sala Kiwi<span class="brand__sub">ARAM · personalizadas</span></span>
+</a>
+<nav class="nav" aria-label="Principal">
+<a class="nav__link" href="index.html">Inicio</a>
+<a class="nav__link" href="estadisticas.html" aria-current="page">Estadísticas</a>
+<button class="theme-toggle" type="button" data-theme-toggle="" aria-label="Cambiar entre tema oscuro y claro">
+<svg class="i i--moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"></path></svg>
+<svg class="i i--sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"></path></svg>
+</button>
+</nav>
+</div>
+</header>
+
+<main id="contenido" class="site-main">
+<div class="container">
+
+<div class="page-head">
+<span class="eyebrow">47 partidas · 8 jugadores</span>
+<h1>Estadísticas del grupo</h1>
+</div>
+
+<section class="tiles" aria-label="Líderes">
+<article class="stat-tile stat-tile--feature">
+<span class="stat-tile__label">Mejor winrate</span>
+<span class="stat-tile__value">61,7<small>%</small></span>
+<span class="stat-tile__sub"><a href="jugador.html">Caro#2077</a> · 29 de 47</span>
+</article>
+<article class="stat-tile">
+<span class="stat-tile__label">Mejor KDA</span>
+<span class="stat-tile__value">4,49</span>
+<span class="stat-tile__sub"><a href="jugador.html">Meli#LAS</a> · 4,2 / 6,3 / 24,1</span>
+</article>
+<article class="stat-tile">
+<span class="stat-tile__label">Más daño medio</span>
+<span class="stat-tile__value">31.240</span>
+<span class="stat-tile__sub"><a href="jugador.html">Caro#2077</a> · por partida</span>
+</article>
+<article class="stat-tile">
+<span class="stat-tile__label">Pentakills</span>
+<span class="stat-tile__value">3</span>
+<span class="stat-tile__sub"><a href="jugador.html">Caro</a> 2 · <a href="jugador.html">ElFede</a> 1</span>
+</article>
+</section>
+
+<section class="section" aria-labelledby="ranking">
+<div class="section__head"><h2 id="ranking">Ranking</h2><span class="section__hint">Pulsa una columna para ordenar</span></div>
+<div class="table-wrap">
+<table class="data-table" data-sortable="">
+<caption class="sr-only">Ranking de jugadores. Ordenado por winrate, de mayor a menor.</caption>
+<thead>
+<tr>
+<th scope="col"><span class="sr-only">Puesto</span></th>
+<th scope="col" class="ta-left">Jugador</th>
+<th scope="col"><button class="sort" type="button">Partidas<svg class="i i--sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 10l4-4 4 4M8 14l4 4 4-4"></path></svg></button></th>
+<th scope="col"><button class="sort" type="button">Victorias<svg class="i i--sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 10l4-4 4 4M8 14l4 4 4-4"></path></svg></button></th>
+<th scope="col" aria-sort="descending"><button class="sort" type="button">Winrate<svg class="i i--sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 10l4-4 4 4M8 14l4 4 4-4"></path></svg></button></th>
+<th scope="col"><button class="sort" type="button">KDA<svg class="i i--sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 10l4-4 4 4M8 14l4 4 4-4"></path></svg></button></th>
+<th scope="col">K / D / A medio</th>
+<th scope="col"><button class="sort" type="button">Daño medio<svg class="i i--sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 10l4-4 4 4M8 14l4 4 4-4"></path></svg></button></th>
+<th scope="col"><button class="sort" type="button">Dobles<svg class="i i--sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 10l4-4 4 4M8 14l4 4 4-4"></path></svg></button></th>
+<th scope="col"><button class="sort" type="button">Triples<svg class="i i--sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 10l4-4 4 4M8 14l4 4 4-4"></path></svg></button></th>
+<th scope="col"><button class="sort" type="button">Cuádr.<svg class="i i--sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 10l4-4 4 4M8 14l4 4 4-4"></path></svg></button></th>
+<th scope="col"><button class="sort" type="button">Pentas<svg class="i i--sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 10l4-4 4 4M8 14l4 4 4-4"></path></svg></button></th>
+</tr>
+</thead>
+<tbody>
+<tr><td><span class="rank">1</span></td><td class="ta-left"><span class="who-cell"><span class="icon icon--sm" style="--h:34" aria-hidden="true">CA</span><a class="player-name" href="jugador.html">Caro<span class="tag">#2077</span></a></span></td><td data-value="47">47</td><td data-value="29">29</td><td data-value="61.7"><span class="wr-cell">61,7 %<span class="meter meter--win" style="--pct:61.7" aria-hidden="true"><span></span></span></span></td><td data-value="4.13"><span class="kda-ratio kda-ratio--good">4,13</span></td><td class="muted">11,8 / 6,1 / 13,4</td><td data-value="31240">31.240</td><td data-value="38">38</td><td data-value="11">11</td><td data-value="4">4</td><td data-value="2"><span class="badge badge--penta">2</span></td></tr>
+<tr><td><span class="rank">2</span></td><td class="ta-left"><span class="who-cell"><span class="icon icon--sm" style="--h:210" aria-hidden="true">EF</span><a class="player-name" href="jugador.html">ElFede<span class="tag">#ARG</span></a></span></td><td data-value="45">45</td><td data-value="26">26</td><td data-value="57.8"><span class="wr-cell">57,8 %<span class="meter meter--win" style="--pct:57.8" aria-hidden="true"><span></span></span></span></td><td data-value="3.47"><span class="kda-ratio kda-ratio--good">3,47</span></td><td class="muted">10,9 / 6,8 / 12,7</td><td data-value="29870">29.870</td><td data-value="31">31</td><td data-value="9">9</td><td data-value="3">3</td><td data-value="1"><span class="badge badge--penta">1</span></td></tr>
+<tr><td><span class="rank">3</span></td><td class="ta-left"><span class="who-cell"><span class="icon icon--sm" style="--h:300" aria-hidden="true">ME</span><a class="player-name" href="jugador.html">Meli<span class="tag">#LAS</span></a></span></td><td data-value="41">41</td><td data-value="23">23</td><td data-value="56.1"><span class="wr-cell">56,1 %<span class="meter meter--win" style="--pct:56.1" aria-hidden="true"><span></span></span></span></td><td data-value="4.49"><span class="kda-ratio kda-ratio--good">4,49</span></td><td class="muted">4,2 / 6,3 / 24,1</td><td data-value="18610">18.610</td><td data-value="6">6</td><td data-value="1">1</td><td data-value="0" class="zero">0</td><td data-value="0" class="zero">0</td></tr>
+<tr><td><span class="rank">4</span></td><td class="ta-left"><span class="who-cell"><span class="icon icon--sm" style="--h:150" aria-hidden="true">NA</span><a class="player-name" href="jugador.html">Nacho<span class="tag">#AXE</span></a></span></td><td data-value="46">46</td><td data-value="24">24</td><td data-value="52.2"><span class="wr-cell">52,2 %<span class="meter meter--win" style="--pct:52.2" aria-hidden="true"><span></span></span></span></td><td data-value="3.33"><span class="kda-ratio kda-ratio--good">3,33</span></td><td class="muted">6,8 / 7,9 / 19,5</td><td data-value="21090">21.090</td><td data-value="12">12</td><td data-value="3">3</td><td data-value="1">1</td><td data-value="0" class="zero">0</td></tr>
+<tr><td><span class="rank">5</span></td><td class="ta-left"><span class="who-cell"><span class="icon icon--sm" style="--h:110" aria-hidden="true">JU</span><a class="player-name" href="jugador.html">Juli<span class="tag">#KIWI</span></a></span></td><td data-value="43">43</td><td data-value="21">21</td><td data-value="48.8"><span class="wr-cell">48,8 %<span class="meter meter--win" style="--pct:48.8" aria-hidden="true"><span></span></span></span></td><td data-value="3.21"><span class="kda-ratio kda-ratio--good">3,21</span></td><td class="muted">10,1 / 7,2 / 13,0</td><td data-value="28330">28.330</td><td data-value="27">27</td><td data-value="8">8</td><td data-value="2">2</td><td data-value="0" class="zero">0</td></tr>
+<tr><td><span class="rank">6</span></td><td class="ta-left"><span class="who-cell"><span class="icon icon--sm" style="--h:20" aria-hidden="true">LU</span><a class="player-name" href="jugador.html">Lucho<span class="tag">#420</span></a></span></td><td data-value="44">44</td><td data-value="20">20</td><td data-value="45.5"><span class="wr-cell">45,5 %<span class="meter meter--win" style="--pct:45.5" aria-hidden="true"><span></span></span></span></td><td data-value="2.38"><span class="kda-ratio">2,38</span></td><td class="muted">8,7 / 8,8 / 12,2</td><td data-value="25760">25.760</td><td data-value="19">19</td><td data-value="5">5</td><td data-value="1">1</td><td data-value="0" class="zero">0</td></tr>
+<tr><td><span class="rank">7</span></td><td class="ta-left"><span class="who-cell"><span class="icon icon--sm" style="--h:260" aria-hidden="true">SA</span><a class="player-name" href="jugador.html">Santi<span class="tag">#OTP</span></a></span></td><td data-value="39">39</td><td data-value="17">17</td><td data-value="43.6"><span class="wr-cell">43,6 %<span class="meter meter--win" style="--pct:43.6" aria-hidden="true"><span></span></span></span></td><td data-value="2.59"><span class="kda-ratio">2,59</span></td><td class="muted">9,4 / 8,1 / 11,6</td><td data-value="26940">26.940</td><td data-value="22">22</td><td data-value="6">6</td><td data-value="2">2</td><td data-value="0" class="zero">0</td></tr>
+<tr><td><span class="rank">8</span></td><td class="ta-left"><span class="who-cell"><span class="icon icon--sm" style="--h:330" aria-hidden="true">VI</span><a class="player-name" href="jugador.html">Vicky<span class="tag">#999</span></a></span></td><td data-value="35">35</td><td data-value="14">14</td><td data-value="40"><span class="wr-cell">40,0 %<span class="meter meter--win" style="--pct:40" aria-hidden="true"><span></span></span></span></td><td data-value="3.43"><span class="kda-ratio kda-ratio--good">3,43</span></td><td class="muted">3,6 / 7,4 / 21,8</td><td data-value="14380">14.380</td><td data-value="4">4</td><td data-value="0" class="zero">0</td><td data-value="0" class="zero">0</td><td data-value="0" class="zero">0</td></tr>
+</tbody>
+</table>
+</div>
+<p class="section__hint" style="margin-top: 12px">KDA = (asesinatos + asistencias) / muertes, sobre el total de partidas del jugador.</p>
+</section>
+
+</div>
+</main>
+
+<footer class="site-footer">
+<div class="container site-footer__inner">
+<p>Esta web no está respaldada por Riot Games ni refleja las opiniones de Riot Games.</p>
+<p>Sala Kiwi · uso privado del grupo</p>
+</div>
+</footer>
+</div>
+</body>
+</html>

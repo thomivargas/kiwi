@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% import "macros.html" as m %}
+{% macro equipo(clase, titulo, t) %}
+<article class="eq-equipo eq-equipo--{{ clase }}">
+<header class="eq-equipo__cab">
+<h3>{{ titulo }}</h3>
+<span class="eq-equipo__media">{{ t.media }} pts · {{ t.prob }} %</span>
+</header>
+<ul class="eq-equipo__lista">
+{% for j in t.jugadores %}
+<li>{% call m::avatar(j.avatar, j.hue, j.iniciales, j.nombre, "icon--sm", "") %}<span class="eq-chip__nombre">{{ j.nombre }}</span><span class="eq-chip__pts">{{ j.puntos }}</span></li>
+{% endfor %}
+</ul>
+<footer class="eq-equipo__pie">
+<span class="eq-gana">Gana <b>{{ t.si_gana }}</b></span>
+<span class="eq-pierde">Pierde <b>{{ t.si_pierde }}</b></span>
+</footer>
+</article>
+{% endmacro %}
+{% block titulo %}Equipos{% endblock %}
+{% block contenido %}
+
+<div class="page-head">
+<h1>Armar equipos</h1>
+</div>
+
+<form class="eq-form" method="get" action="/equipos">
+<ul class="eq-lista">
+{% for j in e.jugadores %}
+<li><label class="eq-chip">
+<input type="checkbox" name="j" value="{{ j.id }}"{% if j.marcado %} checked{% endif %}>
+{% call m::avatar(j.avatar, j.hue, j.iniciales, j.nombre, "icon--sm", "") %}
+<span class="eq-chip__nombre">{{ j.nombre }}</span>
+<span class="eq-chip__pts">{{ j.puntos }}</span>
+</label></li>
+{% endfor %}
+</ul>
+<div class="eq-acciones">
+<button class="btn btn--primary" type="submit">Armar equipos</button>
+<span class="eq-cuenta">{{ e.marcados }} elegidos</span>
+</div>
+</form>
+
+{% if let Some(a) = e.aviso %}<p class="section__hint">{{ a }}</p>{% endif %}
+
+{% for o in e.opciones %}
+<section class="section" aria-label="Opción {{ loop.index }}">
+<div class="section__head"><h2>Opción {{ loop.index }}</h2><span class="eq-dif">diferencia {{ o.diferencia }} pts</span></div>
+<div class="eq-duelo">
+{% call equipo("azul", "Azul", o.azul) %}
+{% call equipo("rojo", "Rojo", o.rojo) %}
+</div>
+</section>
+{% endfor %}
+
+{% endblock %}

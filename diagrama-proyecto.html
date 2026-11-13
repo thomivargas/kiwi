@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Flujo del proyecto</title>
+<style>
+  :root {
+    --bg: #fbfbfa; --fg: #1d1f23; --muted: #5d6470; --panel: #ffffff;
+    --line: #c9ccd2; --accent: #1f5fd6; --accent-soft: #e6eefc;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #16181c; --fg: #e8e9ec; --muted: #9aa1ad; --panel: #1f2227;
+      --line: #3a3f47; --accent: #6ea2ff; --accent-soft: #1d2a44;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #16181c; --fg: #e8e9ec; --muted: #9aa1ad; --panel: #1f2227;
+    --line: #3a3f47; --accent: #6ea2ff; --accent-soft: #1d2a44;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--fg);
+    font: 16px/1.55 system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  main { max-width: 960px; margin: 0 auto; padding: 32px 16px 64px; }
+  h1 { font-size: 1.6rem; margin: 0 0 4px; }
+  h2 { font-size: 1.1rem; margin: 40px 0 8px; }
+  p.lead { color: var(--muted); margin: 0 0 8px; }
+  figure { margin: 0; padding: 12px; background: var(--panel);
+           border: 1px solid var(--line); border-radius: 10px; }
+  figure svg { width: 100%; height: auto; display: block; color: var(--fg); }
+  figcaption { color: var(--muted); font-size: .9rem; margin-top: 8px; }
+  .box  { fill: var(--panel); stroke: currentColor; stroke-width: 1.2; }
+  .hot  { fill: var(--accent-soft); stroke: var(--accent); stroke-width: 1.6; }
+  .soft { fill: none; stroke: currentColor; stroke-width: 1.2; stroke-dasharray: 5 4; opacity: .55; }
+  .ln   { stroke: currentColor; stroke-width: 1.3; fill: none; }
+  .lna  { stroke: var(--accent); stroke-width: 2; fill: none; }
+  .lnd  { stroke: currentColor; stroke-width: 1.3; fill: none; stroke-dasharray: 5 4; }
+  .t    { font: 600 13px system-ui, sans-serif; fill: currentColor; }
+  .s    { font: 11.5px system-ui, sans-serif; fill: var(--muted); }
+  .l    { font: 11.5px system-ui, sans-serif; fill: currentColor; }
+  .la   { font: 600 11.5px system-ui, sans-serif; fill: var(--accent); }
+  .k    { font: 11.5px ui-monospace, Consolas, monospace; fill: currentColor; }
+  .kk   { font: 600 11.5px ui-monospace, Consolas, monospace; fill: var(--accent); }
+  ul { padding-left: 1.2rem; margin: 8px 0; }
+  li { margin: 4px 0; }
+  code { font: .9em ui-monospace, Consolas, monospace; background: var(--accent-soft);
+         padding: 1px 5px; border-radius: 4px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Historial de personalizadas de LoL: flujo del proyecto</h1>
+  <p class="lead">Un solo programa en Rust, SQLite y una web local. Revisa los cuatro diagramas y dime qué cambiar antes de escribir código.</p>
+
+  <h2>1. Cómo viajan los datos (fase local)</h2>
+  <figure>
+    <svg viewBox="0 0 880 310" role="img" aria-label="El programa lol-collector lee el historial del cliente de League, lo inserta en SQLite, y su modo serve consulta SQLite para mostrar páginas HTML en el navegador.">
+      <defs>
+        <marker id="a1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="currentColor"/></marker>
+      </defs>
+      <rect class="soft" x="272" y="10" width="226" height="290" rx="10"/>
+      <text class="s" x="385" y="30" text-anchor="middle">lol-collector.exe (un solo programa)</text>
+
+      <rect class="box" x="20" y="50" width="150" height="90" rx="8"/>
+      <text class="t" x="95" y="84" text-anchor="middle">Cliente de League</text>
+      <text class="s" x="95" y="104" text-anchor="middle">LCU en 127.0.0.1</text>
+      <text class="s" x="95" y="120" text-anchor="middle">solo últimas 20</text>
+
+      <rect class="hot" x="290" y="50" width="190" height="90" rx="8"/>
+      <text class="t" x="385" y="84" text-anchor="middle">modo collect</text>
+      <text class="s" x="385" y="104" text-anchor="middle">solo CUSTOM_GAME</text>
+      <text class="s" x="385" y="120" text-anchor="middle">descarta repetidas</text>
+
+      <rect class="hot" x="290" y="180" width="190" height="90" rx="8"/>
+      <text class="t" x="385" y="214" text-anchor="middle">modo serve</text>
+      <text class="s" x="385" y="234" text-anchor="middle">servidor web local</text>
+      <text class="s" x="385" y="250" text-anchor="middle">http://localhost:3000</text>
+
+      <rect class="box" x="20" y="180" width="150" height="90" rx="8"/>
+      <text class="t" x="95" y="214" text-anchor="middle">Navegador</text>
+      <text class="s" x="95" y="234" text-anchor="middle">tú y quien abra</text>
+      <text class="s" x="95" y="250" text-anchor="middle">el enlace local</text>
+
+      <rect class="box" x="650" y="95" width="210" height="130" rx="8"/>
+      <text class="t" x="755" y="122" text-anchor="middle">SQLite</text>
+      <text class="k" x="755" y="142" text-anchor="middle">data/lol.db</text>
+      <text class="s" x="755" y="168" text-anchor="middle">partidas · jugadores</text>
+      <text class="s" x="755" y="184" text-anchor="middle">participaciones</text>
+      <text class="s" x="755" y="200" text-anchor="middle">partidas_crudas</text>
+
+      <line class="ln" x1="170" y1="95" x2="288" y2="95" marker-end="url(#a1)"/>
+      <text class="l" x="230" y="86" text-anchor="middle">lee historial</text>
+      <line class="ln" x1="480" y1="95" x2="648" y2="128" marker-end="url(#a1)"/>
+      <text class="l" x="565" y="97" text-anchor="middle">inserta partidas</text>
+      <line class="ln" x1="480" y1="225" x2="648" y2="192" marker-end="url(#a1)"/>
+      <text class="l" x="565" y="226" text-anchor="middle">consulta</text>
+      <line class="ln" x1="290" y1="225" x2="172" y2="225" marker-end="url(#a1)"/>
+      <text class="l" x="231" y="216" text-anchor="middle">páginas HTML</text>
+    </svg>
+    <figcaption>Un solo <code>.exe</code> con dos modos. <code>collect</code> es la única pieza que toca el cliente de League; <code>serve</code> nunca lo toca y solo lee SQLite.</figcaption>
+  </figure>
+
+  <h2>2. Tablas de SQLite</h2>
+  <figure>
+    <svg viewBox="0 0 880 360" role="img" aria-label="La tabla participaciones une partidas y jugadores: cada partida tiene varias participaciones, cada jugador tiene varias. Cada partida tiene además un JSON crudo, y los campeones son una tabla opcional para después.">
+      <defs>
+        <marker id="a2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="currentColor"/></marker>
+      </defs>
+
+      <rect class="box" x="20" y="40" width="230" height="181" rx="8"/>
+      <text class="t" x="35" y="60">partidas</text>
+      <line class="ln" x1="20" y1="68" x2="250" y2="68"/>
+      <text class="kk" x="35" y="86">id_partida</text>
+      <text class="k" x="35" y="103">fecha</text>
+      <text class="k" x="35" y="120">duracion_seg</text>
+      <text class="k" x="35" y="137">modo</text>
+      <text class="k" x="35" y="154">tipo</text>
+      <text class="k" x="35" y="171">cola</text>
+      <text class="k" x="35" y="188">mapa</text>
+      <text class="k" x="35" y="205">version_juego · plataforma</text>
+
+      <rect class="hot" x="325" y="40" width="230" height="200" rx="8"/>
+      <text class="t" x="340" y="60">participaciones</text>
+      <line class="ln" x1="325" y1="68" x2="555" y2="68"/>
+      <text class="kk" x="340" y="86">id_partida</text>
+      <text class="kk" x="340" y="103">id_jugador</text>
+      <text class="k" x="340" y="120">equipo · victoria · campeon_id</text>
+      <text class="k" x="340" y="137">asesinatos · muertes · asistencias</text>
+      <text class="k" x="340" y="154">nivel · oro_ganado · curacion</text>
+      <text class="k" x="340" y="171">dano_a_campeones · dano_recibido</text>
+      <text class="k" x="340" y="188">tropas · monstruos · vision</text>
+      <text class="k" x="340" y="205">dobles · triples · cuadras · pentas</text>
+      <text class="k" x="340" y="222">objeto_0..6 · aumento_1..6 · hechizos</text>
+
+      <rect class="box" x="630" y="40" width="230" height="130" rx="8"/>
+      <text class="t" x="645" y="60">jugadores</text>
+      <line class="ln" x1="630" y1="68" x2="860" y2="68"/>
+      <text class="kk" x="645" y="86">id_jugador</text>
+      <text class="k" x="645" y="103">puuid (único)</text>
+      <text class="k" x="645" y="120">nombre</text>
+      <text class="k" x="645" y="137">etiqueta</text>
+      <text class="k" x="645" y="154">visto_por_ultima_vez</text>
+
+      <rect class="box" x="20" y="262" width="230" height="66" rx="8"/>
+      <text class="t" x="35" y="282">partidas_crudas</text>
+      <line class="ln" x1="20" y1="290" x2="250" y2="290"/>
+      <text class="kk" x="35" y="308">id_partida</text>
+      <text class="k" x="35" y="323">json (original, sin tocar)</text>
+
+      <rect class="box" x="630" y="262" width="230" height="66" rx="8" stroke-dasharray="5 4"/>
+      <text class="t" x="645" y="282">campeones (después)</text>
+      <line class="ln" x1="630" y1="290" x2="860" y2="290"/>
+      <text class="kk" x="645" y="308">id</text>
+      <text class="k" x="645" y="323">nombre en español</text>
+
+      <line class="ln" x1="250" y1="130" x2="323" y2="130"/>
+      <text class="l" x="287" y="122" text-anchor="middle">1 : 8</text>
+      <line class="ln" x1="630" y1="130" x2="557" y2="130"/>
+      <text class="l" x="593" y="122" text-anchor="middle">1 : N</text>
+      <line class="ln" x1="135" y1="221" x2="135" y2="260"/>
+      <text class="l" x="143" y="245">1 : 1</text>
+      <polyline class="lnd" points="630,300 440,300 440,242" marker-end="url(#a2)"/>
+      <text class="l" x="535" y="293" text-anchor="middle">campeon_id → nombre</text>
+    </svg>
+    <figcaption><code>participaciones</code> es la tabla que alimenta casi todas las estadísticas. <code>partidas_crudas</code> guarda el JSON original: si quieres una métrica nueva, se calcula desde ahí sin depender del cliente, que solo conserva 20 partidas. En azul, las claves que unen las tablas.</figcaption>
+  </figure>
+
+  <h2>3. Pantallas de la web local</h2>
+  <figure>
+    <svg viewBox="0 0 880 250" role="img" aria-label="La pantalla de inicio lleva a tres pantallas: detalle de una partida, perfil de un jugador y estadísticas del grupo.">
+      <defs>
+        <marker id="a3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="currentColor"/></marker>
+      </defs>
+      <rect class="hot" x="20" y="80" width="230" height="90" rx="8"/>
+      <text class="t" x="135" y="115" text-anchor="middle">Inicio</text>
+      <text class="s" x="135" y="135" text-anchor="middle">últimas partidas</text>
+      <text class="s" x="135" y="151" text-anchor="middle">y resumen del grupo</text>
+
+      <rect class="box" x="420" y="10" width="440" height="62" rx="8"/>
+      <text class="t" x="436" y="34">Partida</text>
+      <text class="s" x="436" y="54">8 jugadores por equipo, KDA, daño, objetos, aumentos</text>
+
+      <rect class="box" x="420" y="94" width="440" height="62" rx="8"/>
+      <text class="t" x="436" y="118">Jugador</text>
+      <text class="s" x="436" y="138">winrate, KDA medio, campeones más jugados, historial</text>
+
+      <rect class="box" x="420" y="178" width="440" height="62" rx="8"/>
+      <text class="t" x="436" y="202">Estadísticas del grupo</text>
+      <text class="s" x="436" y="222">rankings: winrate, KDA, daño, partidas jugadas</text>
+
+      <line class="ln" x1="250" y1="110" x2="418" y2="41" marker-end="url(#a3)"/>
+      <text class="l" x="345" y="64" text-anchor="middle">clic en partida</text>
+      <line class="ln" x1="250" y1="125" x2="418" y2="125" marker-end="url(#a3)"/>
+      <text class="l" x="334" y="117" text-anchor="middle">clic en jugador</text>
+      <line class="ln" x1="250" y1="140" x2="418" y2="209" marker-end="url(#a3)"/>
+      <text class="l" x="345" y="190" text-anchor="middle">menú</text>
+    </svg>
+    <figcaption>Cuatro pantallas. Todas salen de consultas a SQLite; ninguna necesita el cliente de League abierto.</figcaption>
+  </figure>
+
+  <h2>4. Qué cambia cuando pasemos al VPS</h2>
+  <figure>
+    <svg viewBox="0 0 880 290" role="img" aria-label="En la fase local, collect escribe directo en SQLite. En la fase VPS, collect sube las partidas por HTTP con un token a una API en el servidor; esa es la única flecha que cambia.">
+      <defs>
+        <marker id="a4" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="currentColor"/></marker>
+        <marker id="a4a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--accent)"/></marker>
+      </defs>
+      <text class="t" x="20" y="28">Fase local (ahora)</text>
+      <rect class="box" x="20" y="44" width="150" height="70" rx="8"/>
+      <text class="t" x="95" y="74" text-anchor="middle">collect</text>
+      <text class="s" x="95" y="94" text-anchor="middle">en tu PC</text>
+      <rect class="box" x="250" y="44" width="150" height="70" rx="8"/>
+      <text class="t" x="325" y="74" text-anchor="middle">SQLite local</text>
+      <text class="s" x="325" y="94" text-anchor="middle">data/lol.db</text>
+      <rect class="box" x="480" y="44" width="150" height="70" rx="8"/>
+      <text class="t" x="555" y="74" text-anchor="middle">serve</text>
+      <text class="s" x="555" y="94" text-anchor="middle">localhost:3000</text>
+      <rect class="box" x="710" y="44" width="150" height="70" rx="8"/>
+      <text class="t" x="785" y="74" text-anchor="middle">Navegador</text>
+      <text class="s" x="785" y="94" text-anchor="middle">solo tú</text>
+      <line class="ln" x1="170" y1="79" x2="248" y2="79" marker-end="url(#a4)"/>
+      <text class="l" x="209" y="70" text-anchor="middle">inserta</text>
+      <line class="ln" x1="480" y1="79" x2="402" y2="79" marker-end="url(#a4)"/>
+      <text class="l" x="441" y="70" text-anchor="middle">consulta</text>
+      <line class="ln" x1="630" y1="79" x2="708" y2="79" marker-end="url(#a4)"/>
+      <text class="l" x="669" y="70" text-anchor="middle">HTML</text>
+
+      <line class="soft" x1="20" y1="148" x2="860" y2="148"/>
+
+      <text class="t" x="20" y="182">Fase VPS (pospuesta)</text>
+      <rect class="box" x="20" y="198" width="150" height="70" rx="8"/>
+      <text class="t" x="95" y="228" text-anchor="middle">collect</text>
+      <text class="s" x="95" y="248" text-anchor="middle">PC de cada amigo</text>
+      <rect class="hot" x="250" y="198" width="150" height="70" rx="8"/>
+      <text class="t" x="325" y="228" text-anchor="middle">API en el VPS</text>
+      <text class="s" x="325" y="248" text-anchor="middle">Servidor remoto</text>
+      <rect class="box" x="480" y="198" width="150" height="70" rx="8"/>
+      <text class="t" x="555" y="228" text-anchor="middle">Base de datos</text>
+      <text class="s" x="555" y="248" text-anchor="middle">en el servidor</text>
+      <rect class="box" x="710" y="198" width="150" height="70" rx="8"/>
+      <text class="t" x="785" y="228" text-anchor="middle">Web pública</text>
+      <text class="s" x="785" y="248" text-anchor="middle">todo el grupo</text>
+      <line class="lna" x1="170" y1="233" x2="248" y2="233" marker-end="url(#a4a)"/>
+      <text class="la" x="209" y="224" text-anchor="middle">POST + token</text>
+      <line class="ln" x1="400" y1="233" x2="478" y2="233" marker-end="url(#a4)"/>
+      <text class="l" x="439" y="224" text-anchor="middle">inserta</text>
+      <line class="ln" x1="630" y1="233" x2="708" y2="233" marker-end="url(#a4)"/>
+      <text class="l" x="669" y="224" text-anchor="middle">HTML</text>
+    </svg>
+    <figcaption>La flecha en azul es lo único nuevo: <code>collect</code> deja de escribir en un archivo y sube por HTTP. Por eso conviene separar en módulos (captura, base de datos, web) desde ahora.</figcaption>
+  </figure>
+
+  <h2>Fases y decisiones abiertas</h2>
+  <ul>
+    <li><strong>Fase 1 (ahora):</strong> SQLite, importar los 4 JSON ya capturados, web local.</li>
+    <li><strong>Fase 2:</strong> <code>collect</code> en segundo plano, para no perder partidas por el límite de 20.</li>
+    <li><strong>Fase 3 (pospuesta):</strong> API y web en el VPS.</li>
+    <li><strong>Por decidir:</strong> si agregamos la tabla <code>campeones</code> ya (requiere descargar un catálogo público de Riot una vez) o la dejamos para después.</li>
+  </ul>
+</main>
+</body>
+</html>

@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% import "macros.html" as m %}
+{% block titulo %}Partida {{ p.id }}{% endblock %}
+{% block contenido %}
+
+<div class="page-head">
+<div class="match-hero">
+<div style="display: flex; flex-direction: column; gap: 12px">
+<span class="eyebrow">Partida <span style="font-family: var(--font-mono)">{{ p.id }}</span></span>
+<h1>{{ p.titulo }}</h1>
+<div class="page-head__meta">
+<span class="chip">{% call m::cal("i i--sm") %}<time datetime="{{ p.iso }}">{{ p.fecha }}</time></span>
+<span class="chip">{% call m::reloj("i i--sm") %}<span class="sr-only">Duración </span>{{ p.duracion }}</span>
+<span class="chip">{{ p.modo_etiqueta }} <code>{{ p.modo }}</code></span>
+<span class="chip">{{ p.formato }}</span>
+</div>
+</div>
+<div class="match-hero__score" role="group" aria-label="{{ p.aria_marcador }}">
+<div class="match-hero__side"><span class="team-label team-label--blue">Azul</span><span class="match-hero__num" style="color: var(--team-blue)">{{ p.kills_azul }}</span>{% call m::insignia(p.gana_azul) %}</div>
+<span class="scoreboard__sep" style="font-family: var(--font-display); font-size: 32px">–</span>
+<div class="match-hero__side"><span class="team-label team-label--red">Rojo</span><span class="match-hero__num" style="color: var(--team-red)">{{ p.kills_rojo }}</span>{% call m::insignia(p.gana_rojo) %}</div>
+</div>
+</div>
+</div>
+
+{% if let Some(f) = p.mvp %}
+<section class="mvp-card" aria-labelledby="mvp-t">
+{% call m::champ(f.campeon, "icon--xl") %}
+<div class="mvp-card__body">
+<div class="badges"><span class="badge badge--mvp"><svg class="i i--sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 18h16M5 15l-1.5-8 5 4L12 5l3.5 6 5-4L19 15z"></path></svg>MVP</span>{% if f.penta %}<span class="badge badge--penta">Pentakill</span>{% endif %}{% if f.cuadra %}<span class="badge badge--quadra">Cuádruple</span>{% endif %}</div>
+<h2 id="mvp-t" class="mvp-card__name"><a class="player-name" href="/jugador/{{ f.id_jugador }}">{{ f.nombre }}<span class="tag">#{{ f.etiqueta }}</span></a></h2>
+<span class="mvp-card__line">{{ p.mvp_linea }}</span>
+</div>
+<div class="mvp-card__stats">
+<div class="mini-stat"><span class="mini-stat__label">KDA</span><span class="mini-stat__value">{{ f.k }} / {{ f.d }} / {{ f.a }}</span></div>
+<div class="mini-stat"><span class="mini-stat__label">Ratio</span><span class="mini-stat__value" style="color: var(--gold-strong)">{{ f.ratio }}</span></div>
+<div class="mini-stat"><span class="mini-stat__label">Daño</span><span class="mini-stat__value">{{ f.dano }}</span></div>
+<div class="mini-stat"><span class="mini-stat__label">Oro</span><span class="mini-stat__value">{{ f.oro }}</span></div>
+</div>
+</section>
+{% endif %}
+
+<div class="section" style="margin-top: 32px">
+<div class="tabs" role="tablist" aria-label="Vista de la partida">
+<button class="tab" type="button" role="tab" id="tab-resumen" aria-controls="panel-resumen" aria-selected="true">Resumen</button>
+<button class="tab" type="button" role="tab" id="tab-detalle" aria-controls="panel-detalle" aria-selected="false" tabindex="-1">Estadísticas detalladas</button>
+</div>
+
+<div class="tab-panel" id="panel-resumen" role="tabpanel" aria-labelledby="tab-resumen">
+{% for e in p.equipos %}
+<section class="team-panel team-panel--{{ e.clase }} {% if e.gana %}is-winner{% else %}is-loser{% endif %}" aria-labelledby="t-{{ e.clase }}">
+<div class="team-panel__head">
+<div class="team-panel__title"><h2 id="t-{{ e.clase }}">{{ e.nombre }}</h2>{% call m::insignia(e.gana) %}</div>
+<div class="team-panel__totals"><span>KDA <b>{{ e.kills }} / {{ e.muertes }} / {{ e.asistencias }}</b></span><span>Daño <b>{{ e.dano }}</b></span><span>Oro <b>{{ e.oro }}</b></span></div>
+</div>
+<div class="player-cols" aria-hidden="true"><span>Campeón</span><span>Jugador</span><span>K / D / A</span><span>Daño a campeones</span><span>Oro</span><span>Objetos · aumentos</span></div>
+<ol class="player-list">
+{% for f in e.filas %}{% call m::fila_jugador(f, e.clase) %}
+{% endfor %}</ol>
+</section>
+{% endfor %}
+</div>
+
+<div class="tab-panel" id="panel-detalle" role="tabpanel" aria-labelledby="tab-detalle" hidden="">
+<div class="table-wrap">
+<table class="data-table" data-sortable="">
+<thead>
+<tr>
+<th scope="col">Jugador</th>
+<th scope="col" class="ta-left">Equipo</th>
+<th scope="col">{% call m::ordenar("Curación") %}</th>
+<th scope="col" aria-sort="descending">{% call m::ordenar("Daño recibido") %}</th>
+<th scope="col">{% call m::ordenar("Tropas") %}</th>
+<th scope="col">{% call m::ordenar("Monstruos") %}</th>
+<th scope="col">{% call m::ordenar("Visión") %}</th>
+<th scope="col">{% call m::ordenar("Dobles") %}</th>
+<th scope="col">{% call m::ordenar("Triples") %}</th>
+<th scope="col">{% call m::ordenar("Cuádruples") %}</th>
+<th scope="col">{% call m::ordenar("Pentas") %}</th>
+</tr>
+</thead>
+<tbody>
+{% for r in p.detalle %}<tr><td><span class="who-cell">{% call m::champ(r.campeon, "icon--xs") %}<a class="player-name" href="/jugador/{{ r.id_jugador }}">{{ r.nombre }}</a></span></td><td class="ta-left"><span class="team-label team-label--{{ r.clase }}">{{ r.corto }}</span></td><td data-value="{{ r.curacion.v }}"{% if r.curacion.v == 0 %} class="zero"{% endif %}>{{ r.curacion.t }}</td><td data-value="{{ r.recibido.v }}"{% if r.recibido.v == 0 %} class="zero"{% endif %}>{{ r.recibido.t }}</td><td data-value="{{ r.tropas.v }}"{% if r.tropas.v == 0 %} class="zero"{% endif %}>{{ r.tropas.t }}</td><td data-value="{{ r.monstruos.v }}"{% if r.monstruos.v == 0 %} class="zero"{% endif %}>{{ r.monstruos.t }}</td><td data-value="{{ r.vision.v }}"{% if r.vision.v == 0 %} class="zero"{% endif %}>{{ r.vision.t }}</td><td data-value="{{ r.dobles.v }}"{% if r.dobles.v == 0 %} class="zero"{% endif %}>{{ r.dobles.t }}</td><td data-value="{{ r.triples.v }}"{% if r.triples.v == 0 %} class="zero"{% endif %}>{{ r.triples.t }}</td><td data-value="{{ r.cuadras.v }}"{% if r.cuadras.v == 0 %} class="zero"{% endif %}>{{ r.cuadras.t }}</td><td data-value="{{ r.pentas.v }}"{% if r.pentas.v == 0 %} class="zero"{% endif %}>{{ r.pentas.t }}</td></tr>
+{% endfor %}</tbody>
+</table>
+</div>
+</div>
+</div>
+{% endblock %}

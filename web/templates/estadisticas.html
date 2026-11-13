@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% import "macros.html" as m %}
+{% block titulo %}Ranking{% endblock %}
+{% block contenido %}
+
+<div class="page-head">
+<span class="eyebrow">{{ e.partidas }} partidas · {{ e.jugadores }} jugadores</span>
+<div class="titulo-ayuda">
+<h1>Ranking del grupo</h1>
+<button class="icon-btn" type="button" data-modal-open="modal-puntos" aria-haspopup="dialog" aria-label="Cómo se calculan los puntos" title="Cómo se calculan los puntos">
+<svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9.5"></circle><path d="M9.6 9.4a2.5 2.5 0 1 1 3.6 2.2c-.8.4-1.2 1-1.2 1.9M12 16.8h.01"></path></svg>
+</button>
+</div>
+</div>
+
+{% if e.filas.is_empty() %}
+<section class="section">
+<p class="section__hint">Todavía no hay partidas guardadas.</p>
+</section>
+{% else %}
+
+<section class="podio" aria-label="Los tres primeros">
+{% for f in e.podio %}
+<article class="podio__card podio__card--{{ f.pos }}">
+<div class="podio__cab">
+<span class="podio__pos" aria-label="Puesto {{ f.pos }}">{{ f.pos }}</span>
+{% call m::avatar(f.avatar, f.hue, f.iniciales, f.nombre, "icon--lg", "") %}
+<div class="podio__quien">
+<a class="player-name" href="/jugador/{{ f.id }}">{{ f.nombre }}<span class="tag">#{{ f.etiqueta }}</span></a>
+{% if let Some(r) = f.rango_riot %}<span class="podio__riot">{{ r }}</span>{% endif %}
+</div>
+</div>
+<div class="podio__puntos">{% call m::rombo("podio__rombo") %}<b>{{ f.puntos }}</b><small>pts</small></div>
+<div class="podio__record">{{ f.victorias }} V – {{ f.derrotas }} D ({{ f.wr_texto }} %)</div>
+<div class="podio__pie">
+<div class="podio__dato"><b>{{ f.partidas }}</b><small>partidas</small></div>
+<div class="mini-roster">{% for i in f.mejores %}{% call m::champ(i, "icon--xs") %}{% endfor %}</div>
+<div class="podio__dato"><b>{{ f.kda_texto }}</b><small>kda</small></div>
+</div>
+</article>
+{% endfor %}
+</section>
+
+<section class="section" aria-labelledby="ranking">
+<div class="section__head"><h2 id="ranking">Clasificación</h2></div>
+<div class="table-wrap">
+<table class="data-table" data-sortable="">
+<caption class="sr-only">Ranking de jugadores. Ordenado por puntos, de mayor a menor.</caption>
+<thead>
+<tr>
+<th scope="col"><span class="sr-only">Puesto</span></th>
+<th scope="col" class="ta-left">Jugador</th>
+<th scope="col" aria-sort="descending">{% call m::ordenar("Puntos") %}</th>
+<th scope="col">{% call m::ordenar("Partidas") %}</th>
+<th scope="col">{% call m::ordenar("Winrate") %}</th>
+<th scope="col">{% call m::ordenar("KDA") %}</th>
+<th scope="col">{% call m::ordenar("Daño medio") %}</th>
+<th scope="col" class="ta-left">Más jugados</th>
+</tr>
+</thead>
+<tbody>
+{% for f in e.filas %}<tr><td><span class="rank">{{ f.pos }}</span></td><td class="ta-left"><span class="who-cell">{% call m::avatar(f.avatar, f.hue, f.iniciales, f.nombre, "icon--sm", "") %}<span class="quien-celda"><a class="player-name" href="/jugador/{{ f.id }}">{{ f.nombre }}<span class="tag">#{{ f.etiqueta }}</span></a>{% if let Some(r) = f.rango_riot %}<span class="quien-celda__riot">{{ r }}</span>{% endif %}</span></span></td><td data-value="{{ f.puntos }}"><span class="puntos-celda">{% call m::rombo("puntos-celda__rombo") %}{{ f.puntos }}</span></td><td data-value="{{ f.partidas }}">{{ f.partidas }}</td><td data-value="{{ f.wr_val }}"><span class="wr-cell"><span class="wr-vd">{{ f.victorias }} V – {{ f.derrotas }} D</span>{{ f.wr_texto }} %<span class="meter meter--win" style="--pct:{{ f.wr_val }}" aria-hidden="true"><span></span></span></span></td><td data-value="{{ f.kda_val }}"><span class="kda-ratio {{ f.kda_clase }}">{{ f.kda_texto }}</span></td><td data-value="{{ f.dano_val }}">{{ f.dano_texto }}</td><td class="ta-left"><span class="mini-roster">{% for i in f.mejores %}{% call m::champ(i, "icon--xs") %}{% endfor %}</span></td></tr>
+{% endfor %}</tbody>
+</table>
+</div>
+</section>
+
+{% endif %}
+
+<dialog class="modal" id="modal-puntos" aria-labelledby="modal-puntos-t">
+<div class="modal__caja">
+<header class="modal__cab">
+<h2 id="modal-puntos-t" class="modal__titulo">Cómo funcionan los puntos</h2>
+<button class="icon-btn" type="button" data-modal-close aria-label="Cerrar">
+<svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg>
+</button>
+</header>
+<div class="modal__cuerpo">
+<p>Todos empiezan con <b>1000 puntos</b>. <b class="modal__ganar">Ganar suma</b> y <b class="modal__perder">perder resta</b>.</p>
+<p>Vencer a un equipo con más puntos da más; perder contra uno con menos puntos quita más.</p>
+<p class="modal__nota">Sistema Elo (K = 32).</p>
+</div>
+</div>
+</dialog>
+{% endblock %}

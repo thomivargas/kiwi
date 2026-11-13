@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Sala Kiwi · Inicio</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800&amp;family=IBM+Plex+Mono:wght@500&amp;family=IBM+Plex+Sans:wght@400;500;600;700&amp;display=swap">
+<link rel="stylesheet" href="styles.css">
+<script src="app.js" defer></script>
+</head>
+<body>
+<div class="app" data-theme="dark">
+<a class="skip-link" href="#contenido">Saltar al contenido</a>
+<header class="site-header">
+<div class="container site-header__inner">
+<a class="brand" href="index.html" aria-label="Sala Kiwi, inicio">
+<svg class="brand__mark" viewBox="0 0 32 32" aria-hidden="true"><path d="M16 2 30 16 16 30 2 16Z" fill="none" stroke="currentColor" stroke-width="2"></path><path d="M16 9.5 22.5 16 16 22.5 9.5 16Z" fill="currentColor"></path></svg>
+<span style="display: flex; flex-direction: column; line-height: 1; gap: 4px">Sala Kiwi<span class="brand__sub">ARAM · personalizadas</span></span>
+</a>
+<nav class="nav" aria-label="Principal">
+<a class="nav__link" href="index.html" aria-current="page">Inicio</a>
+<a class="nav__link" href="estadisticas.html">Estadísticas</a>
+<button class="theme-toggle" type="button" data-theme-toggle="" aria-label="Cambiar entre tema oscuro y claro">
+<svg class="i i--moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"></path></svg>
+<svg class="i i--sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"></path></svg>
+</button>
+</nav>
+</div>
+</header>
+
+<main id="contenido" class="site-main">
+<div class="container">
+
+<div class="page-head">
+<span class="eyebrow">Historial del grupo</span>
+<h1>Las noches en el Abismo</h1>
+</div>
+
+<section aria-label="Resumen del grupo" class="tiles">
+<article class="stat-tile">
+<span class="stat-tile__label">Partidas jugadas</span>
+<span class="stat-tile__value">47</span>
+<span class="stat-tile__sub">7,2 jugadores por partida de media</span>
+</article>
+<article class="stat-tile">
+<span class="stat-tile__label"><svg class="i i--sm" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5.5" width="16" height="14" rx="2"></rect><path d="M4 10h16M8.5 3.5v4M15.5 3.5v4"></path></svg>Última partida</span>
+<span class="stat-tile__value">8 nov<small>22:41</small></span>
+<span class="stat-tile__sub">Hace 4 días · <a href="partida.html">ganó el equipo azul, 42–29</a></span>
+</article>
+<article class="stat-tile stat-tile--feature">
+<span class="stat-tile__label"><svg class="i i--sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 4h8v5a4 4 0 0 1-8 0V4zM8 6H5a3 3 0 0 0 3 4M16 6h3a3 3 0 0 1-3 4M12 13v4M8.5 20h7"></path></svg>Más victorias</span>
+<div class="stat-tile__who">
+<span class="icon icon--md" style="--h:34" role="img" aria-label="Avatar de Caro"><span aria-hidden="true">CA</span></span>
+<div style="display: flex; flex-direction: column">
+<a class="player-name" href="jugador.html" style="font-size: 20px">Caro<span class="tag">#2077</span></a>
+<span class="stat-tile__sub">29 victorias · 61,7 % de winrate</span>
+</div>
+</div>
+</article>
+</section>
+
+<section class="section" aria-labelledby="ultimas">
+<div class="section__head">
+<h2 id="ultimas">Últimas partidas</h2>
+<span class="section__hint">Mostrando 6 de 47</span>
+</div>
+
+<ol class="match-list">
+
+<li>
+<article class="match-card" aria-label="Partida del 8 de noviembre, 22:41. Ganó el equipo azul 42 a 29">
+<div class="match-card__meta">
+<span class="meta-item"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5.5" width="16" height="14" rx="2"></rect><path d="M4 10h16M8.5 3.5v4M15.5 3.5v4"></path></svg><time datetime="2026-11-08T22:41">8 nov 2026 · 22:41</time></span>
+<span class="meta-item"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"></circle><path d="M12 7.5V12l3 2"></path></svg><span><span class="sr-only">Duración </span>18:42</span></span>
+<span class="chip">ARAM con aumentos <code>KIWI</code></span>
+<span class="meta-item">4 vs 4</span>
+<a class="match-card__link" href="partida.html">Ver partida<svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+</div>
+<div class="match-card__body">
+<section class="team-block team-block--blue is-winner" aria-label="Equipo azul, victoria">
+<div class="team-block__head"><span class="team-label team-label--blue">Equipo azul</span><span class="badge badge--win"><svg class="i i--sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>Victoria</span></div>
+<ul class="roster">
+<li class="roster__player"><span class="icon icon--sm" style="--h:269" role="img" aria-label="Campeón 157"><span aria-hidden="true">157</span></span><span class="roster__text"><span class="roster__name">ElFede</span><span class="roster__kda">14/7/19</span></span></li>
+<li class="roster__player"><span class="icon icon--sm" style="--h:174" role="img" aria-label="Campeón 222"><span aria-hidden="true">222</span></span><span class="roster__text"><span class="roster__name">Caro</span><span class="roster__kda">19/6/16</span></span></li>
+<li class="roster__player"><span class="icon icon--sm" style="--h:198" role="img" aria-label="Campeón 54"><span aria-hidden="true">54</span></span><span class="roster__text"><span class="roster__name">Nacho</span><span class="roster__kda">6/9/28</span></span></li>
+<li class="roster__player"><span class="icon icon--sm" style="--h:339" role="img" aria-label="Campeón 147"><span aria-hidden="true">147</span></span><span class="roster__text"><span class="roster__name">Meli</span><span class="roster__kda">3/7/34</span></span></li>
+</ul>
+</section>
+<div class="scoreboard"><div class="scoreboard__nums"><span class="scoreboard__blue">42</span><span class="scoreboard__sep">–</span><span class="scoreboard__red">29</span></div><span class="scoreboard__label">Asesinatos</span></div>
+<section class="team-block team-block--red is-loser" aria-label="Equipo rojo, derrota">
+<div class="team-block__head"><span class="team-label team-label--red">Equipo rojo</span><span class="badge badge--loss"><svg class="i i--sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg>Derrota</span></div>
+<ul class="roster">
+<li class="roster__player"><span class="icon icon--sm" style="--h:71" role="img" aria-label="Campeón 103"><span aria-hidden="true">103</span></span><span class="roster__text"><span class="roster__name">Juli</span><span class="roster__kda">11/10/14</span></span></li>
+<li class="roster__player"><span class="icon icon--sm" style="--h:355" role="img" aria-label="Campeón 875"><span aria-hidden="true">875</span></span><span class="roster__text"><span class="roster__name">Lucho</span><span class="roster__kda">9/11/12</span></span></li>
+<li class="roster__player"><span class="icon icon--sm" style="--h:147" role="img" aria-label="Campeón 51"><span aria-hidden="true">51</span></span><span class="roster__text"><span class="roster__name">Santi</span><span class="roster__kda">7/12/13</span></span></li>
+<li class="roster__player"><span class="icon icon--sm" style="--h:313" role="img" aria-label="Campeón 89"><span aria-hidden="true">89</span></span><span class="roster__text"><span class="roster__name">Vicky</span><span class="roster__kda">2/9/20</span></span></li>
+</ul>
+</section>
+</div>
+</article>
+</li>
+
+<li>
+<article class="match-card" aria-label="Partida del 8 de noviembre, 22:12. Ganó el equipo rojo 38 a 31">
+<div class="match-card__meta">
+<span class="meta-item"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5.5" width="16" height="14" rx="2"></rect><path d="M4 10h16M8.5 3.5v4M15.5 3.5v4"></path></svg><time datetime="2026-11-08T22:12">8 nov 2026 · 22:12</time></span>
+<span class="meta-item"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"></circle><path d="M12 7.5V12l3 2"></path></svg><span><span class="sr-only">Duración </span>21:05</span></span>
+<span class="chip">ARAM con aumentos <code>KIWI</code></span>
+<span class="meta-item">4 vs 4</span>
+<a class="match-card__link" href="partida.html">Ver partida<svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+</div>
+<div class="match-card__body">
+<section class="team-block team-block--blue is-loser" aria-label="Equipo azul, derrota">
+<div class="team-block__head"><span class="team-label team-label--blue">Equipo azul</span><span class="badge badge--loss"><svg class="i i--sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg>Derrota</span></div>
+<ul class="roster">
+<li class="roster__player"><span class="icon icon--sm" style="--h:243" role="img" aria-label="Campeón 99"><span aria-hidden="true">99</span></span><span class="roster__text"><span class="roster__name">Juli</span><span class="roster__kda">8/9/15</span></span></li>
+<li class="roster__player"><span class="icon icon--sm" style="--h:292" role="img" aria-label="Campeón 236"><span aria-hidden="true">236</span></span><span class="roster__text"><span class="roster__name">Santi</span><span class="roster__kda">10/10/9</span></span></li>
+<li class="roster__player"><span class="icon icon--sm" style="--h:284" role="img" aria-label="Campeón 412"><span aria-hidden="true">412</span></span><span class="roster__text"><span class="roster__name">Vicky</span><span class="roster__kda">1/10/22</span></span></li>
+<li class="roster__player"><span class="icon icon--sm" style="--h:262" role="img" aria-label="Campeón 86"><span aria-hidden="true">86</span></span><span class="roster__text"><span class="roster__name">Nacho</span><span class="roster__kda">12/9/11</span></span></li>
+</ul>
+</section>
+<div class="scoreboard"><div class="scoreboard__nums"><span class="scoreboard__blue">31</span><span class="scoreboard__sep">–</span><span class="scoreboard__red">38</span></div><span class="scoreboard__label">Asesinatos</span></div>
+<section class="team-block team-block--red is-winner" aria-label="Equipo rojo, victoria">
+<div class="team-block__head"><span class="team-label team-label--red">Equipo rojo</span><span class="badge badge--win"><svg class="i i--sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>Victoria</span></div>
+<ul class="roster">
+<li class="roster__player"><span class="icon icon--sm" style="--h:357" role="img" aria-label="Campeón 21"><span aria-hidden="true">21</span></span><span class="roster__text"><span class="roster__name">Caro</span><span class="roster__kda">13/7/14</span></span></li>
+<li class="roster__player"><span class="icon icon--sm" style="--h:85" role="img" aria-label="Campeón 245"><span aria-hidden="true">245</span></span><span class="roster__text"><span class="roster__name">ElFede</span><span class="roster__kda">11/8/17</span></span></li>
+<li class="roster__player"><span class="icon icon--sm" style="--h:75" role="img" aria-label="Campeón 555"><span aria-hidden="true">555</span></span><span class="roster__text"><span class="roster__name">Lucho</span><span class="roster__kda">9/9/18</span></span></li>
+<li class="roster__player"><span class="icon icon--sm" style="--h:185" role="img" aria-label="Campeón 25"><span aria-hidden="true">25</span></span><span class="roster__text"><span class="roster__name">Meli</span><span class="roster__kda">5/7/27</span></span></li>
+</ul>
+</section>
+</div>
+</article>
+</li>
+
+<li>
+<article class="match-card" aria-label="Partida del 8 de noviembre, 21:44. Ganó el equipo azul 36 a 22">
+<div class="match-card__meta">
+<span class="meta-item"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5.5" width="16" height="14" rx="2"></rect><path d="M4 10h16M8.5 3.5v4M15.5 3.5v4"></path></svg><time datetime="2026-11-08T21:44">8 nov 2026 · 21:44</time></span>
+<span class="meta-item"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"></circle><path d="M12 7.5V12l3 2"></path></svg><span><span class="sr-only">Duración </span>15:27</span></span>
+<span class="chip">ARAM con aumentos <code>KIWI</code></span>
+<span class="meta-item">3 vs 3</span>
+<a class="match-card__link" href="partida.html">Ver partida<svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+</div>
+<div class="match-card__body">
+<section class="team-block team-block--blue is-winner" aria-label="Equipo azul, victoria">
+<div class="team-block__head"><span class="team-label team-label--blue">Equipo azul</span><span class="badge badge--win"><svg class="i i--sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>Victoria</span></div>
+<ul class="roster">
+<li class="roster__player"><span class="icon icon--sm" style="--h:147" role="img" aria-label="Campeón 51"><span aria-hidden="true">51</span></span><span class="roster__text"><span class="roster__name">Caro</span><span class="roster__kda">15/6/12</span></span></li>
+<li class="roster__player"><span class="icon icon--sm" style="--h:243" role="img" aria-label="Campeón 99"><span aria-hidden="true">99</span></span><span class="roster__text"><span class="roster__name">Meli</span><span class="roster__kda">7/8/22</span></span></li>
+<li class="roster__player"><span class="icon icon--sm" style="--h:355" role="img" aria-label="Campeón 875"><span aria-hidden="true">875</span></span><span class="roster__text"><span class="roster__name">Lucho</span><span class="roster__kda">14/8/15</span></span></li>
+</ul>
+</section>
+<div class="scoreboard"><div class="scoreboard__nums"><span class="scoreboard__blue">36</span><span class="scoreboard__sep">–</span><span class="scoreboard__red">22</span></div><span class="scoreboard__label">Asesinatos</span></div>
+<section class="team-block team-block--red is-loser" aria-label="Equipo rojo, derrota">
+<div class="team-block__head"><span class="team-label team-label--red">Equipo rojo</span><span class="badge badge--loss"><svg class="i i--sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg>Derrota</span></div>
+<ul class="roster">
+<li class="roster__player"><span class="icon icon--sm" style="--h:269" role="img" aria-label="Campeón 157"><span aria-hidden="true">157</span></span><span class="roster__text"><span class="roster__name">Juli</span><span class="roster__kda">10/12/7</span></span></li>
+<li class="roster__player"><span class="icon icon--sm" style="--h:174" role="img" aria-label="Campeón 222"><span aria-hidden="true">222</span></span><span class="roster__text"><span class="roster__name">Santi</span><span class="roster__kda">9/13/8</span></span></li>
+<li class="roster__player"><span class="icon icon--sm" style="--h:284" role="img" aria-label="Campeón 412"><span aria-hidden="true">412</span></span><span class="roster__text"><span class="roster__name">Nacho</span><span class="roster__kda">3/11/14</span></span></li>
+</ul>
+</section>
+</div>
+</article>
+</li>
+
+<li>
+<article class="match-card" aria-label="Partida del 6 de noviembre, 23:03. Ganó el equipo rojo 47 a 40">
+<div class="match-card__meta">
+<span class="meta-item"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5.5" width="16" height="14" rx="2"></rect><path d="M4 10h16M8.5 3.5v4M15.5 3.5v4"></path></svg><time datetime="2026-11-06T23:03">6 nov 2026 · 23:03</time></span>
+<span class="meta-item"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"></circle><path d="M12 7.5V12l3 2"></path></svg><span><span class="sr-only">Duración </span>24:18</span></span>
+<span class="chip">ARAM con aumentos <code>KIWI</code></span>
+<span class="meta-item">3 vs 3</span>
+<a class="match-card__link" href="partida.html">Ver partida<svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+</div>
+<div class="match-card__body">
+<section class="team-block team-block--blue is-loser" aria-label="Equipo azul, derrota">
+<div class="team-block__head"><span class="team-label team-label--blue">Equipo azul</span><span class="badge badge--loss"><svg class="i i--sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg>Derrota</span></div>
+<ul class="roster">
+<li class="roster__player"><span class="icon icon--sm" style="--h:71" role="img" aria-label="Campeón 103"><span aria-hidden="true">103</span></span><span class="roster__text"><span class="roster__name">Juli</span><span class="roster__kda">16/14/12</span></span></li>
+<li class="roster__player"><span class="icon icon--sm" style="--h:198" role="img" aria-label="Campeón 54"><span aria-hidden="true">54</span></span><span class="roster__text"><span class="roster__name">Lucho</span><span class="roster__kda">9/16/19</span></span></li>
+<li class="roster__player"><span class="icon icon--sm" style="--h:357" role="img" aria-label="Campeón 21"><span aria-hidden="true">21</span></span><span class="roster__text"><span class="roster__name">Santi</span><span class="roster__kda">15/17/10</span></span></li>
+</ul>
+</section>
+<div class="scoreboard"><div class="scoreboard__nums"><span class="scoreboard__blue">40</span><span class="scoreboard__sep">–</span><span class="scoreboard__red">47</span></div><span class="scoreboard__label">Asesinatos</span></div>
+<section class="team-block team-block--red is-winner" aria-label="Equipo rojo, victoria">
+<div class="team-block__head"><span class="team-label team-label--red">Equipo rojo</span><span class="badge badge--win"><svg class="i i--sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>Victoria</span></div>
+<ul class="roster">
+<li class="roster__player"><span class="icon icon--sm" style="--h:339" role="img" aria-label="Campeón 147"><span aria-hidden="true">147</span></span><span class="roster__text"><span class="roster__name">Caro</span><span class="roster__kda">20/13/22</span></span></li>
+<li class="roster__player"><span class="icon icon--sm" style="--h:313" role="img" aria-label="Campeón 89"><span aria-hidden="true">89</span></span><span class="roster__text"><span class="roster__name">Meli</span><span class="roster__kda">6/12/31</span></span></li>
+<li class="roster__player"><span class="icon icon--sm" style="--h:75" role="img" aria-label="Campeón 555"><span aria-hidden="true">555</span></span><span class="roster__text"><span class="roster__name">Vicky</span><span class="roster__kda">21/15/14</span></span></li>
+</ul>
+</section>
+</div>
+</article>
+</li>
+
+<li>
+<article class="match-card" aria-label="Partida del 6 de noviembre, 22:30. Ganó el equipo azul 33 a 30">
+<div class="match-card__meta">
+<span class="meta-item"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5.5" width="16" height="14" rx="2"></rect><path d="M4 10h16M8.5 3.5v4M15.5 3.5v4"></path></svg><time datetime="2026-11-06T22:30">6 nov 2026 · 22:30</time></span>
+<span class="meta-item"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"></circle><path d="M12 7.5V12l3 2"></path></svg><span><span class="sr-only">Duración </span>19:51</span></span>
+<span class="chip">ARAM con aumentos <code>KIWI</code></span>
+<span class="meta-item">4 vs 4</span>
+<a class="match-card__link" href="partida.html">Ver partida<svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+</div>
+<div class="match-card__body">
+<section class="team-block team-block--blue is-winner" aria-label="Equipo azul, victoria">
+<div class="team-block__head"><span class="team-label team-label--blue">Equipo azul</span><span class="badge badge--win"><svg class="i i--sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>Victoria</span></div>
+<ul class="roster">
+<li class="roster__player"><span class="icon icon--sm" style="--h:355" role="img" aria-label="Campeón 875"><span aria-hidden="true">875</span></span><span class="roster__text"><span class="roster__name">Nacho</span><span class="roster__kda">9/7/16</span></span></li>
+<li class="roster__player"><span class="icon icon--sm" style="--h:292" role="img" aria-label="Campeón 236"><span aria-hidden="true">236</span></span><span class="roster__text"><span class="roster__name">ElFede</span><span class="roster__kda">13/6/12</span></span></li>
+<li class="roster__player"><span class="icon icon--sm" style="--h:313" role="img" aria-label="Campeón 89"><span aria-hidden="true">89</span></span><span class="roster__text"><span class="roster__name">Vicky</span><span class="roster__kda">2/8/24</span></span></li>
+<li class="roster__player"><span class="icon icon--sm" style="--h:85" role="img" aria-label="Campeón 245"><span aria-hidden="true">245</span></span><span class="roster__text"><span class="roster__name">Juli</span><span class="roster__kda">9/9/15</span></span></li>
+</ul>
+</section>
+<div class="scoreboard"><div class="scoreboard__nums"><span class="scoreboard__blue">33</span><span class="scoreboard__sep">–</span><span class="scoreboard__red">30</span></div><span class="scoreboard__label">Asesinatos</span></div>
+<section class="team-block team-block--red is-loser" aria-label="Equipo rojo, derrota">
+<div class="team-block__head"><span class="team-label team-label--red">Equipo rojo</span><span class="badge badge--loss"><svg class="i i--sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg>Derrota</span></div>
+<ul class="roster">
+<li class="roster__player"><span class="icon icon--sm" style="--h:174" role="img" aria-label="Campeón 222"><span aria-hidden="true">222</span></span><span class="roster__text"><span class="roster__name">Caro</span><span class="roster__kda">12/8/10</span></span></li>
+<li class="roster__player"><span class="icon icon--sm" style="--h:269" role="img" aria-label="Campeón 157"><span aria-hidden="true">157</span></span><span class="roster__text"><span class="roster__name">Santi</span><span class="roster__kda">8/10/9</span></span></li>
+<li class="roster__player"><span class="icon icon--sm" style="--h:262" role="img" aria-label="Campeón 86"><span aria-hidden="true">86</span></span><span class="roster__text"><span class="roster__name">Lucho</span><span class="roster__kda">7/7/12</span></span></li>
+<li class="roster__player"><span class="icon icon--sm" style="--h:185" role="img" aria-label="Campeón 25"><span aria-hidden="true">25</span></span><span class="roster__text"><span class="roster__name">Meli</span><span class="roster__kda">3/8/21</span></span></li>
+</ul>
+</section>
+</div>
+</article>
+</li>
+
+<li>
+<article class="match-card" aria-label="Partida del 1 de noviembre, 21:58. Ganó el equipo rojo 35 a 27">
+<div class="match-card__meta">
+<span class="meta-item"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5.5" width="16" height="14" rx="2"></rect><path d="M4 10h16M8.5 3.5v4M15.5 3.5v4"></path></svg><time datetime="2026-11-01T21:58">1 nov 2026 · 21:58</time></span>
+<span class="meta-item"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"></circle><path d="M12 7.5V12l3 2"></path></svg><span><span class="sr-only">Duración </span>17:36</span></span>
+<span class="chip">ARAM con aumentos <code>KIWI</code></span>
+<span class="meta-item">4 vs 3</span>
+<a class="match-card__link" href="partida.html">Ver partida<svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+</div>
+<div class="match-card__body">
+<section class="team-block team-block--blue is-loser" aria-label="Equipo azul, derrota">
+<div class="team-block__head"><span class="team-label team-label--blue">Equipo azul</span><span class="badge badge--loss"><svg class="i i--sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg>Derrota</span></div>
+<ul class="roster">
+<li class="roster__player"><span class="icon icon--sm" style="--h:147" role="img" aria-label="Campeón 51"><span aria-hidden="true">51</span></span><span class="roster__text"><span class="roster__name">ElFede</span><span class="roster__kda">10/9/8</span></span></li>
+<li class="roster__player"><span class="icon icon--sm" style="--h:198" role="img" aria-label="Campeón 54"><span aria-hidden="true">54</span></span><span class="roster__text"><span class="roster__name">Nacho</span><span class="roster__kda">4/9/17</span></span></li>
+<li class="roster__player"><span class="icon icon--sm" style="--h:243" role="img" aria-label="Campeón 99"><span aria-hidden="true">99</span></span><span class="roster__text"><span class="roster__name">Santi</span><span class="roster__kda">9/8/11</span></span></li>
+<li class="roster__player"><span class="icon icon--sm" style="--h:284" role="img" aria-label="Campeón 412"><span aria-hidden="true">412</span></span><span class="roster__text"><span class="roster__name">Vicky</span><span class="roster__kda">4/9/18</span></span></li>
+</ul>
+</section>
+<div class="scoreboard"><div class="scoreboard__nums"><span class="scoreboard__blue">27</span><span class="scoreboard__sep">–</span><span class="scoreboard__red">35</span></div><span class="scoreboard__label">Asesinatos</span></div>
+<section class="team-block team-block--red is-winner" aria-label="Equipo rojo, victoria">
+<div class="team-block__head"><span class="team-label team-label--red">Equipo rojo</span><span class="badge badge--win"><svg class="i i--sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>Victoria</span></div>
+<ul class="roster">
+<li class="roster__player"><span class="icon icon--sm" style="--h:71" role="img" aria-label="Campeón 103"><span aria-hidden="true">103</span></span><span class="roster__text"><span class="roster__name">Caro</span><span class="roster__kda">13/7/12</span></span></li>
+<li class="roster__player"><span class="icon icon--sm" style="--h:355" role="img" aria-label="Campeón 875"><span aria-hidden="true">875</span></span><span class="roster__text"><span class="roster__name">Lucho</span><span class="roster__kda">12/10/13</span></span></li>
+<li class="roster__player"><span class="icon icon--sm" style="--h:339" role="img" aria-label="Campeón 147"><span aria-hidden="true">147</span></span><span class="roster__text"><span class="roster__name">Meli</span><span class="roster__kda">10/10/19</span></span></li>
+</ul>
+</section>
+</div>
+</article>
+</li>
+
+</ol>
+</section>
+
+</div>
+</main>
+
+<footer class="site-footer">
+<div class="container site-footer__inner">
+<p>Esta web no está respaldada por Riot Games ni refleja las opiniones de Riot Games.</p>
+<p>Sala Kiwi · uso privado del grupo</p>
+</div>
+</footer>
+</div>
+</body>
+</html>

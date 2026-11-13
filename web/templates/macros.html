@@ -1,0 +1,48 @@
+{# Piezas reutilizables del diseno "Escarcha y oro". #}
+
+{% macro cal(c) %}<svg class="{{ c }}" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5.5" width="16" height="14" rx="2"></rect><path d="M4 10h16M8.5 3.5v4M15.5 3.5v4"></path></svg>{% endmacro %}
+
+{% macro reloj(c) %}<svg class="{{ c }}" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"></circle><path d="M12 7.5V12l3 2"></path></svg>{% endmacro %}
+
+{# Rombo de la marca, usado como icono de puntos. #}
+{% macro rombo(c) %}<svg class="{{ c }}" viewBox="0 0 32 32" aria-hidden="true"><path d="M16 2 30 16 16 30 2 16Z" fill="none" stroke="currentColor" stroke-width="2"></path><path d="M16 9.5 22.5 16 16 22.5 9.5 16Z" fill="currentColor"></path></svg>{% endmacro %}
+
+{% macro flecha() %}<svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>{% endmacro %}
+
+{% macro insignia(gana) %}{% if gana %}<span class="badge badge--win"><svg class="i i--sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>Victoria</span>{% else %}<span class="badge badge--loss"><svg class="i i--sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg>Derrota</span>{% endif %}{% endmacro %}
+
+{# Icono de campeon u hechizo: imagen real si existe, si no iniciales o numero. #}
+{% macro champ(i, tam) %}<span class="icon {{ tam }}" style="--h:{{ i.hue }}" role="img" aria-label="{{ i.nombre }}" title="{{ i.nombre }}">{% if let Some(src) = i.img %}<img src="{{ src }}" alt="" loading="lazy">{% else %}<span aria-hidden="true">{{ i.texto }}</span>{% endif %}</span>{% endmacro %}
+
+{# Avatar de jugador: icono de perfil de Riot si esta descargado, si no iniciales. `estilo` anade CSS (o ""). #}
+{% macro avatar(img, hue, ini, nombre, tam, estilo) %}<span class="icon {{ tam }}" style="--h:{{ hue }}{{ estilo }}" role="img" aria-label="Avatar de {{ nombre }}">{% if let Some(src) = img %}<img src="{{ src }}" alt="" loading="lazy">{% else %}<span aria-hidden="true">{{ ini }}</span>{% endif %}</span>{% endmacro %}
+
+{# Casilla de objeto. `tam` puede ser "" o "slot--sm". #}
+{% macro objeto(o, tam) %}{% if o.vacio %}<span class="slot {{ tam }} slot--empty{% if o.trinket %} slot--trinket{% endif %}" role="img" aria-label="Casilla vacía"></span>{% else %}<span class="slot {{ tam }}{% if o.trinket %} slot--trinket{% endif %}" style="--h:{{ o.hue }}" role="img" aria-label="{{ o.nombre }}" title="{{ o.nombre }}">{% if let Some(src) = o.img %}<img src="{{ src }}" alt="" loading="lazy">{% endif %}</span>{% endif %}{% endmacro %}
+
+{# Fila de jugador en el detalle de una partida. #}
+{% macro fila_jugador(f, medidor) %}
+<li class="player-row{% if f.es_mvp %} is-mvp{% endif %}">
+<div class="player-row__champ">
+<span class="champ-stack">{% call champ(f.campeon, "icon--lg") %}<span class="level"><span class="sr-only">Nivel </span>{{ f.nivel }}</span></span>
+<span class="spells" role="group" aria-label="Hechizos">{% for h in f.hechizos %}{% call champ(h, "spell") %}{% endfor %}</span>
+</div>
+<div class="player-row__who"><a class="player-name" href="/jugador/{{ f.id_jugador }}">{{ f.nombre }}<span class="tag">#{{ f.etiqueta }}</span></a>{% if f.es_mvp || f.penta || f.cuadra %}<div class="badges">{% if f.es_mvp %}<span class="badge badge--mvp">MVP</span>{% endif %}{% if f.penta %}<span class="badge badge--penta">Pentakill</span>{% endif %}{% if f.cuadra %}<span class="badge badge--quadra">Cuádruple</span>{% endif %}</div>{% endif %}</div>
+<div class="player-row__kda"><span class="kda num"><b>{{ f.k }}</b> / <b class="kda__d">{{ f.d }}</b> / <b>{{ f.a }}</b></span><span class="kda-ratio {{ f.kda_clase }}">{{ f.kda_texto }}</span></div>
+<div class="player-row__stat player-row__dmg"><span class="cell-label">Daño a campeones</span><span class="num">{{ f.dano }}</span><span class="meter meter--{{ medidor }}" style="--pct:{{ f.dano_pct }}" aria-hidden="true"><span></span></span></div>
+<div class="player-row__stat player-row__gold"><span class="cell-label">Oro</span><span class="num">{{ f.oro }}</span><span class="meter meter--gold" style="--pct:{{ f.oro_pct }}" aria-hidden="true"><span></span></span></div>
+<div class="player-row__build">
+<div class="items" role="group" aria-label="Objetos">{% for o in f.objetos %}{% call objeto(o, "") %}{% endfor %}</div>
+{% if !f.aumentos.is_empty() %}<div class="augments" role="group" aria-label="Aumentos">{% for a in f.aumentos %}<span class="augment" style="--h:{{ a.hue }}" role="img" aria-label="{{ a.nombre }}" title="{{ a.nombre }}"></span>{% endfor %}</div>{% endif %}
+</div>
+</li>
+{% endmacro %}
+
+{# Ultimos resultados como puntos verdes (victoria) y rojos (derrota), de mas viejo a mas nuevo. #}
+{% macro forma(lista) %}<span class="forma" role="img" aria-label="Últimos resultados">{% for g in lista.iter() %}<i class="forma__p {% if g %}is-win{% else %}is-loss{% endif %}"></i>{% endfor %}</span>{% endmacro %}
+
+{# Jugador de un par: avatar + nombre enlazado a su pagina Flex. #}
+{% macro jug_flex(j) %}<span class="who-cell">{% call avatar(j.avatar, j.hue, j.iniciales, j.nombre, "icon--sm", "") %}<a class="player-name" href="/flex/{{ j.id }}">{{ j.nombre }}</a></span>{% endmacro %}
+
+{# Icono de ordenar de las tablas. #}
+{% macro ordenar(texto) %}<button class="sort" type="button">{{ texto }}<svg class="i i--sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 10l4-4 4 4M8 14l4 4 4-4"></path></svg></button>{% endmacro %}

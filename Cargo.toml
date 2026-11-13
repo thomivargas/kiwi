@@ -1,0 +1,19 @@
+[package]
+name = "lol-collector"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+anyhow = "1"
+askama = "0.14"
+axum = "0.8"
+base64 = "0.22"
+chrono = { version = "0.4", default-features = false, features = ["clock", "std"] }
+mime_guess = "2"
+reqwest = { version = "0.12", default-features = false, features = ["blocking", "json", "rustls-tls"] }
+rusqlite = { version = "0.32", features = ["bundled"] }
+rust-embed = "8"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+sysinfo = "0.33"
+tokio = { version = "1", features = ["rt-multi-thread", "net"] }
